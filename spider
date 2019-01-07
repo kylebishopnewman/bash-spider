@@ -15,19 +15,14 @@ echo "$seed" > "$url_file"
 : > "$crawled"
 
 ## Begin Crawling
-while read url; do
-	echo "Crawling $url"
-
-	already_crawled=false	
-
+while read url; do	
 	## Check to see if page has already been crawled
 	grep "^$url$" "$crawled" > /dev/null
-	if [ $? -eq 0 ]; then
-		already_crawled=true
-	fi
+	
+	## If it has not
+	if [ $? -ne 0 ]; then
+		echo "Crawling $url"
 
-	## If the page has not been crawled
-	if [ !$already_crawled ]; then
 		## Download page, appending output to log file and output contents of page to output file
 		wget -o "$log_file" -O "$output_file" "$url"
 	
