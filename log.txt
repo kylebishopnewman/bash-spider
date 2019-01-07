@@ -1,0 +1,17 @@
+--2019-01-07 23:04:17--  https://news.google.co.nz/nwshp
+Resolving news.google.co.nz (news.google.co.nz)... 216.58.196.131, 2404:6800:4006:805::2003
+Connecting to news.google.co.nz (news.google.co.nz)|216.58.196.131|:443... connected.
+HTTP request sent, awaiting response... 301 Moved Permanently
+Location: https://news.google.co.nz/ [following]
+--2019-01-07 23:04:18--  https://news.google.co.nz/
+Reusing existing connection to news.google.co.nz:443.
+HTTP request sent, awaiting response... 302 Found
+Location: https://news.google.com/?hl=en-NZ&gl=NZ&ceid=NZ:en [following]
+--2019-01-07 23:04:19--  https://news.google.com/?hl=en-NZ&gl=NZ&ceid=NZ:en
+Resolving news.google.com (news.google.com)... 216.58.199.46, 2404:6800:4006:807::200e
+Connecting to news.google.com (news.google.com)|216.58.199.46|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: unspecified [text/html]
+Saving to: ‘output.txt’
+
+     0K .......... ........

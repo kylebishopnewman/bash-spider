@@ -19,3 +19,7 @@ fi
 if [ -f level0.txt ]; then 
 	rm level*.txt
 fi
+
+if [ -d level0 ]; then
+	rm -r level0
+fi

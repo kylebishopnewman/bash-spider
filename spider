@@ -9,11 +9,11 @@ log_file='log.txt'
 output_file='output.txt'
 url_file='urls.txt'
 crawled='crawled.txt'
-level=0
+directory_level="./tree-root"
 
 ## Set up crawl
-$(echo "$seed" | tee "$url_file" "level$level.txt" > /dev/null)
-level=$((level+1))
+mkdir -p "$directory_level"
+$(echo "$seed" > "$url_file")
 : > "$crawled"
 
 ## Begin Crawling
@@ -32,8 +32,11 @@ while read url; do
 		if [ $? -eq 0 ]; then
 			## Parse the output file for links (following structure (http/https)://www.some-thing.com/)
 			## Append found links to url file
-			$(grep -Eo "(http|https)://[A-Za-z0-9\./-]+" "$output_file" | tee -a "$url_file" "level$level.txt" > /dev/null)
-			level=$((level+1))
+			$(grep -Eo "(http|https)://[A-Za-z0-9\./-]+" "$output_file" >> "$url_file")
+			
+			directory_level="$directory_level/${url#h*//}"
+			mkdir -p "$directory_level"
+			$(grep -Eo "(http|https)://[A-Za-z0-9\./-]+" "$output_file" > "$directory_level/links.txt")
 		fi
 		
 		## Once crawl has finished *remember* that page has been crawled
