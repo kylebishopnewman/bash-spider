@@ -1,7 +1,0 @@
---2019-01-07 15:38:09--  http://schema.org/BreadcrumbList
-Resolving schema.org (schema.org)... 216.58.203.110, 2404:6800:4006:806::200e
-Connecting to schema.org (schema.org)|216.58.203.110|:80... connected.
-HTTP request sent, awaiting response... 301 Moved Permanently
-Location: https://schema.org/BreadcrumbList [following]
---2019-01-07 15:38:09--  https://schema.org/BreadcrumbList
-Connecting to schema.org (schema.org)|216.58.203.110|:443... connected.
