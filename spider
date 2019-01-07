@@ -12,11 +12,8 @@ crawled='crawled.txt'
 level=0
 
 ## Set up crawl
-echo "level $level:" > "$url_file"
+$(echo "$seed" | tee "$url_file" "level$level.txt" > /dev/null)
 level=$((level+1))
-
-echo "$seed" > "$url_file"
-echo "$seed" > "level$level.txt"
 : > "$crawled"
 
 ## Begin Crawling
@@ -35,10 +32,8 @@ while read url; do
 		if [ $? -eq 0 ]; then
 			## Parse the output file for links (following structure (http/https)://www.some-thing.com/)
 			## Append found links to url file
-			echo "level $level:" >> "$url_file"
+			$(grep -Eo "(http|https)://[A-Za-z0-9\./-]+" "$output_file" | tee -a "$url_file" "level$level.txt" > /dev/null)
 			level=$((level+1))
-			$(grep -Eo "(http|https)://[A-Za-z0-9\./-]+" "$output_file" >> "$url_file")
-			$(grep -Eo "(http|https)://[A-Za-z0-9\./-]+" "$output_file" >> "level$level.txt")
 		fi
 		
 		## Once crawl has finished *remember* that page has been crawled
