@@ -1,8 +1,0 @@
---2019-01-07 13:57:35--  https://www.youtube.com/
-Resolving www.youtube.com (www.youtube.com)... 216.58.203.110, 216.58.200.110, 172.217.167.78, ...
-Connecting to www.youtube.com (www.youtube.com)|216.58.203.110|:443... connected.
-HTTP request sent, awaiting response... 200 OK
-Length: unspecified [text/html]
-Saving to: ‘output.txt’
-
-     0K .......... ...
