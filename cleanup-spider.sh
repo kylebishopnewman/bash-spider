@@ -1,5 +1,7 @@
 #!/bin/bash
 
+seed="https://www.google.com"
+
 rm output.txt
 rm log.txt
-rm urls.txt
+echo "$seed" > urls.txt
