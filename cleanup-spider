@@ -15,3 +15,7 @@ fi
 if [ -f crawled.txt ]; then
 	rm crawled.txt
 fi
+
+if [[ -f level*.txt ]]; then
+	rm level*.txt
+fi

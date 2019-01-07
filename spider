@@ -9,31 +9,39 @@ log_file='log.txt'
 output_file='output.txt'
 url_file='urls.txt'
 crawled='crawled.txt'
+level=0
 
 ## Set up crawl
+echo "level $level:" > "$url_file"
+level=$((level+1))
+
 echo "$seed" > "$url_file"
+echo "$seed" > "level$level.txt"
 : > "$crawled"
 
 ## Begin Crawling
 while read url; do	
 	## Check to see if page has already been crawled
-	grep "^$url$" "$crawled" > /dev/null
+	$(grep "^$url$" "$crawled" > /dev/null)
 	
 	## If it has not
 	if [ $? -ne 0 ]; then
 		echo "Crawling $url"
 
 		## Download page, appending output to log file and output contents of page to output file
-		wget -o "$log_file" -O "$output_file" "$url"
+		$(wget -o "$log_file" -O "$output_file" "$url")
 	
 		## If the download was successful
 		if [ $? -eq 0 ]; then
 			## Parse the output file for links (following structure (http/https)://www.some-thing.com/)
 			## Append found links to url file
-			grep -Eo "(http|https)://[A-Za-z0-9\./-]+" "$output_file" >> "$url_file"
+			echo "level $level:" >> "$url_file"
+			level=$((level+1))
+			$(grep -Eo "(http|https)://[A-Za-z0-9\./-]+" "$output_file" >> "$url_file")
+			$(grep -Eo "(http|https)://[A-Za-z0-9\./-]+" "$output_file" >> "level$level.txt")
 		fi
 		
-		# Once crawl has finished *remember* that page has been crawled
+		## Once crawl has finished *remember* that page has been crawled
 		echo "$url" >> "$crawled"
 	fi
 done < "$url_file"
