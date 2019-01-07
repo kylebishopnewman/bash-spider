@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ## Cleanup previous crawl
-./cleanup-spider
+$(./cleanup-spider)
 
 ## Variables
 seed='https://www.google.com'
@@ -21,14 +21,12 @@ while read url; do
 	already_crawled=false	
 
 	## Check to see if page has already been crawled
-	for crawled_page in $(cat "$crawled"); do
-		if [ "$url" = "$crawled_page" ]; then
-			already_crawled=true
-			break
-		fi
-	done
+	grep "^$url$" "$crawled" > /dev/null
+	if [ $? -eq 0 ]; then
+		already_crawled=true
+	fi
 
-	## The page has not been crawled
+	## If the page has not been crawled
 	if [ !$already_crawled ]; then
 		## Download page, appending output to log file and output contents of page to output file
 		wget -o "$log_file" -O "$output_file" "$url"
@@ -43,4 +41,4 @@ while read url; do
 		# Once crawl has finished *remember* that page has been crawled
 		echo "$url" >> "$crawled"
 	fi
-done < $url_file
+done < "$url_file"
