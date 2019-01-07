@@ -1,7 +1,13 @@
 #!/bin/bash
 
-seed="https://www.google.com"
+if [ -f output.txt ]; then
+	rm output.txt
+fi
 
-rm output.txt
-rm log.txt
-echo "$seed" > urls.txt
+if [ -f log.txt ]; then
+	rm log.txt
+fi
+
+if [ -f urls.txt ]; then
+	rm urls.txt
+fi
