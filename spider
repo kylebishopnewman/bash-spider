@@ -1,17 +1,46 @@
 #!/bin/bash
 
+## Cleanup previous crawl
+./cleanup-spider
+
+## Variables
 seed='https://www.google.com'
 log_file='log.txt'
 output_file='output.txt'
 url_file='urls.txt'
+crawled='crawled.txt'
 
-echo "$seed" > $url_file
+## Set up crawl
+echo "$seed" > "$url_file"
+: > "$crawled"
 
+## Begin Crawling
 while read url; do
 	echo "Crawling $url"
 
-	wget -o $log_file -O $output_file $url
-	if [ $? -eq 0 ]; then
-		grep -Eo "(http|https)://[A-Za-z0-9\./-]+" $output_file >> $url_file
+	already_crawled=false	
+
+	## Check to see if page has already been crawled
+	for crawled_page in $(cat "$crawled"); do
+		if [ "$url" = "$crawled_page" ]; then
+			already_crawled=true
+			break
+		fi
+	done
+
+	## The page has not been crawled
+	if [ !$already_crawled ]; then
+		## Download page, appending output to log file and output contents of page to output file
+		wget -o "$log_file" -O "$output_file" "$url"
+	
+		## If the download was successful
+		if [ $? -eq 0 ]; then
+			## Parse the output file for links (following structure (http/https)://www.some-thing.com/)
+			## Append found links to url file
+			grep -Eo "(http|https)://[A-Za-z0-9\./-]+" "$output_file" >> "$url_file"
+		fi
+		
+		# Once crawl has finished *remember* that page has been crawled
+		echo "$url" >> "$crawled"
 	fi
 done < $url_file

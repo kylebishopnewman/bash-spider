@@ -11,3 +11,7 @@ fi
 if [ -f urls.txt ]; then
 	rm urls.txt
 fi
+
+if [ -f crawled.txt ]; then
+	rm crawled.txt
+fi
